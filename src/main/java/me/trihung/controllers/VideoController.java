@@ -56,15 +56,16 @@ public class VideoController extends HttpServlet {
 		} else if (url.contains("/manager/video/search")) {
 			String name = req.getParameter("search");
 			System.out.println("search by title: " + name);
+			req.setAttribute("search", name);
 			if (name.strip().length() == 0) {
 				List<Video> list = videoService.findAll();
 				req.setAttribute("listvideo", list);
-				req.getRequestDispatcher("/view/manager/video-list.jsp").forward(req, resp);
+				req.getRequestDispatcher("/view/manager/video/video-list.jsp").forward(req, resp);
 				return;
 			}
 			List<Video> list = videoService.findByTitle(name);
 			req.setAttribute("listvideo", list);
-			req.getRequestDispatcher("/view/manager/video-list.jsp").forward(req, resp);
+			req.getRequestDispatcher("/view/manager/video/video-list.jsp").forward(req, resp);
 		} else {
 			List<Video> list = videoService.findAll();
 			req.setAttribute("listvideo", list);

@@ -85,7 +85,7 @@ public class VideoDaoImpl implements IVideoDao{
 	@Override
 	public List<Video> findByTitle(String keyword) {
 		EntityManager enma = JPAConfig.getEntityManager();
-		String jpql = "SELECT v FROM Video v WHERE v.Title like :vidname";
+		String jpql = "SELECT v FROM Video v WHERE v.title like :vidname";
 		TypedQuery<Video> query = enma.createQuery(jpql, Video.class);
 		query.setParameter("vidname", "%"+keyword+"%");
 		return query.getResultList();

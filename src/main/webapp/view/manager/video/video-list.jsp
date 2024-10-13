@@ -18,11 +18,11 @@ body {
 </style>
 </head>
 <br>
- <form action="<c:url value='/manager/category/search'></c:url>"
+ <form action="<c:url value='/manager/video/search'></c:url>"
 		method="get" enctype="multipart/form-data">
 <div class="input-search">
 <input type="text"
-			id="search" name="search" placeholder="Tìm kiếm...">
+			id="search" name="search" placeholder="Tìm kiếm..." value='${search}'>
 
 <input class="search-btn" type="submit" value="Search">
 			
