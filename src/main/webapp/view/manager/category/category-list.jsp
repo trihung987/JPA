@@ -54,8 +54,12 @@ body {
 			<td>
 				<a href="<c:url value='/manager/category/edit?id=${cate.categoryId }'/>">Sửa</a>
 			| 	<a href="<c:url value='/manager/category/delete?id=${cate.categoryId }'/>">Xóa</a>
+			|	<a href="<c:url value='/manager/video/catesearch?idcate=${cate.categoryId }&search='/>">Mở các video thuộc category này</a>
 			</td>
 		</tr>
 	</c:forEach>
 </table> 
+<br>
+<a href="<c:url value='/manager/video'/>">Mở danh sách videos của toàn bộ category</a>
+
 </html>

@@ -20,7 +20,7 @@ import me.trihung.services.impl.VideoServiceImpl;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 70, maxFileSize = 1024 * 1024 * 70, maxRequestSize = 1024 * 1024 * 70)
 @WebServlet(urlPatterns = { "/manager/video", "/manager/video/edit", "/manager/video/update",
-		"/manager/video/insert", "/manager/video/delete", "/manager/video/search" })
+		"/manager/video/insert", "/manager/video/delete", "/manager/video/search", "/manager/video/catesearch" })
 public class VideoController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -41,6 +41,7 @@ public class VideoController extends HttpServlet {
 			req.setAttribute("video", video);
 			req.getRequestDispatcher("/view/manager/video/video-edit.jsp").forward(req, resp);
 		} else if (url.contains("/manager/video/insert")) {
+			req.setAttribute("idcate", req.getParameter("idcate"));
 			req.getRequestDispatcher("/view/manager/video/video-insert.jsp").forward(req, resp);
 			
 		} else if (url.contains("/manager/video/delete")) {
@@ -64,6 +65,36 @@ public class VideoController extends HttpServlet {
 				return;
 			}
 			List<Video> list = videoService.findByTitle(name);
+			req.setAttribute("listvideo", list);
+			req.getRequestDispatcher("/view/manager/video/video-list.jsp").forward(req, resp);
+		}else if (url.contains("/manager/video/catesearch")) {
+			String name = req.getParameter("search").strip();
+			String ids = req.getParameter("idcate");
+			System.out.println("search by title: " + name+" | cate="+ids);
+			req.setAttribute("idcate", ids);
+			req.setAttribute("search", name);
+			if (ids==null || ids.strip().length()==0) {
+				if (name.strip().length() == 0) {
+					List<Video> list = videoService.findAll();
+					req.setAttribute("listvideo", list);
+					req.getRequestDispatcher("/view/manager/video/video-list.jsp").forward(req, resp);
+					return;
+				}
+				List<Video> list = videoService.findByTitle(name);
+				req.setAttribute("listvideo", list);
+				req.getRequestDispatcher("/view/manager/video/video-list.jsp").forward(req, resp);
+				return;
+			}
+			Integer idcate = Integer.parseInt(ids);
+			if (name.length() == 0) {
+				List<Video> list = cateService.findById(idcate).getVideos();
+				req.setAttribute("listvideo", list);
+				req.getRequestDispatcher("/view/manager/video/video-list.jsp").forward(req, resp);
+				return;
+			}
+			List<Video> list = cateService.findById(idcate).getVideos()
+					.stream()
+					.filter(vid->vid.getTitle().toLowerCase().contains(name.toLowerCase())).toList();
 			req.setAttribute("listvideo", list);
 			req.getRequestDispatcher("/view/manager/video/video-list.jsp").forward(req, resp);
 		} else {

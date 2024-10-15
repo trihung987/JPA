@@ -18,17 +18,21 @@ body {
 </style>
 </head>
 <br>
- <form action="<c:url value='/manager/video/search'></c:url>"
+ <form action="<c:url value='/manager/video/catesearch'></c:url>"
 		method="get" enctype="multipart/form-data">
 <div class="input-search">
 <input type="text"
 			id="search" name="search" placeholder="Tìm kiếm..." value='${search}'>
-
+<input type="text"
+			id="idcate" name="idcate" value='${idcate}' hidden="true">
 <input class="search-btn" type="submit" value="Search">
 			
 </div>
 </form> 
-<a href="<c:url value='/manager/video/insert'/>">Thêm video</a>
+<c:if test="${idcate.strip().length() != 0 }">
+	<c:url value="?idcate=${idcate.strip()}" var="idcatestr"></c:url>
+</c:if>
+<a href="<c:url value='/manager/video/insert${idcatestr}'/>">Thêm video</a>
 
 <table border="1">
 	<tr>
@@ -67,4 +71,5 @@ body {
 			</td>
 		</tr>
 	</c:forEach>
-</table> 
+</table>
+<a href="<c:url value='/manager/category'/>">Back to category</a> 

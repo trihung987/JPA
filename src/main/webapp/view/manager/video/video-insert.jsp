@@ -45,7 +45,7 @@
 		<br>
 		<label for="videocateid">Video category id: </label>
 		 <input type="text"
-			id="videocateid" name="videocateid" value="${video.category.categoryId}"><br>
+			id="videocateid" name="videocateid" value="${idcate}"><br>
 		<br> <input type="submit" value="Insert">
 	</form>
 

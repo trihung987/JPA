@@ -3,6 +3,7 @@ package me.trihung.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,7 +35,7 @@ public class Category implements Serializable{
 	@Column(name="Status")
 	private int status;
 	
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
 	private List<Video> videos;
 
 	public Video addVideo(Video video) {
